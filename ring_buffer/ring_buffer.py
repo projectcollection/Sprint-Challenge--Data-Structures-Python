@@ -3,9 +3,9 @@ class RingBuffer:
     self.capacity = capacity 
     self.current = 0
     self.storage = [None]*capacity
+    self.none_counter = capacity
 
   def append(self, item):
-    print(self.storage)
     if len(self.storage) < self.capacity:
       self.storage.append()
     else:
@@ -15,8 +15,11 @@ class RingBuffer:
     if self.current == self.capacity:
         self.current = 0
 
+    if self.none_counter != 0:
+      self.none_counter -= 1
+
   def get(self):
-    if None in self.storage:
+    if self.none_counter > 0:
       return self.storage[:self.current]
     else:
       return self.storage
